@@ -14,6 +14,9 @@
     "postdeploy": "npm run migrate:production",
     "deploy": "git push heroku master"
   },
+  "engines": {
+    "node": "13.12.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/M-Sayer/felix-server.git"
