@@ -9,6 +9,11 @@ types.setTypeParser(1700, function(val) {
   return parseFloat(val)
 });
 
+var types = require('pg').types
+types.setTypeParser(20, function(val) {
+  return parseFloat(val)
+});
+
 const db = knex({
   client: 'pg',
   connection: DATABASE_URL,
@@ -75,6 +80,7 @@ const moveContribution = async (goal, allowance, adjusted) => {
   const difference = goal.goal_amount - goal.current_amount;
   let amount = goal.contribution_amount;
   // subtract contribution amount from allowance
+
   adjusted
     ? allowance -= difference // if true, subtract difference from allowance 
     : allowance -= goal.contribution_amount;  //if false, subtract contribution amount from allowance
@@ -83,6 +89,8 @@ const moveContribution = async (goal, allowance, adjusted) => {
   adjusted
     ? goal.current_amount += difference //if true, add difference to current amt
     : goal.current_amount += goal.contribution_amount; // if false, add contribution amt to current amt
+
+  console.log(goal.current_amount)
 
   if (adjusted) amount = difference;
 

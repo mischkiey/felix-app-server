@@ -33,7 +33,6 @@
 
 
 //check end date
-
 const {
   asyncForEach,
   selectGoals,
@@ -47,14 +46,14 @@ async function automatedGoals () {
   try {
     // select all incomplete goals
     const goals = await selectGoals({ 'completed': 'false' });
-
     await asyncForEach(goals, async goal => {
       //get allowance on each iteration to account for potential changes
       const allowance = await selectUserAllowance(goal.user_id);
-      
       // if there's enough allowance to make a contribution
+
       if (allowance > goal.contribution_amount) {
         // if the amount needed to compelete the goal is greater than the contribution
+
         if (goal.goal_amount - goal.current_amount > goal.contribution_amount) {
           return moveContribution(goal, allowance, adjusted = false);
         }
@@ -79,5 +78,7 @@ async function automatedGoals () {
     console.log(error);
   }
 };
+
+automatedGoals();
 
 module.exports = automatedGoals;
